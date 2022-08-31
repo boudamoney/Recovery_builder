@@ -9,9 +9,9 @@ env:
   # (required) manifest branch 
   BRANCH: twrp-11
   # (required) device codename i.e: sweet mojito.. 
-  DEVICE: m10lte
+  DEVICE: m12
   # (required) device tree link with branch if exists
-  DT_LINK: https://github.com/boudamoney/m10
+  DT_LINK: https://github.com/RaghuVarma331/android_device_samsung_m12-TWRP.git
   # (required) who made your phone ? 
   MANUFACTURER: samsung
   # (required) recovery partiton = recovery, else (no recovery partition): boot 
@@ -20,7 +20,7 @@ env:
   IMAGE: image
   # (required) depend of device tree if you see twrp_"codename".mk use twrp
   # else (omni_"codename".mk): omni
-  OT: twrp
+  OT: omni
   # dont change that
   SYM: _
   # (required) output format for some reason samsung phones need a custom mkbootimg
@@ -56,7 +56,7 @@ jobs:
          run: |
               cd work
               . build/envsetup.sh && lunch $OT$SYM$DEVICE-eng && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET$IMAGE -j60
-              zip twrp.zip /home/runner/work/Recovery_builder/Recovery_builder/work/out/target/product/$DEVICE/$TARGET$FORMAT
+              zip twrp.zip /home/runner/work/out/target/product/$DEVICE/$TARGET$FORMAT
 
        - name: Save in artifact
          uses: actions/upload-artifact@v3
