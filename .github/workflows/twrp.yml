@@ -7,11 +7,11 @@ env:
   # (required) twrp manifest 
   MANIFEST: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git
   # (required) manifest branch 
-  BRANCH: twrp-11
+  BRANCH: twrp-12.1
   # (required) device codename i.e: sweet mojito.. 
-  DEVICE: m12
+  DEVICE: f12
   # (required) device tree link with branch if exists
-  DT_LINK: https://github.com/RaghuVarma331/android_device_samsung_m12-TWRP.git
+  DT_LINK: https://github.com/boudamoney/test.git
   # (required) who made your phone ? 
   MANUFACTURER: samsung
   # (required) recovery partiton = recovery, else (no recovery partition): boot 
@@ -20,7 +20,7 @@ env:
   IMAGE: image
   # (required) depend of device tree if you see twrp_"codename".mk use twrp
   # else (omni_"codename".mk): omni
-  OT: omni
+  OT: twrp
   # dont change that
   SYM: _
   # (required) output format for some reason samsung phones need a custom mkbootimg
@@ -50,12 +50,12 @@ jobs:
              cd work
              repo init -u $MANIFEST -b $BRANCH --depth=1              
              repo sync -c -j700 --force-sync --no-clone-bundle --no-tags
-             git clone $DT_LINK --depth=1 --single-branch device/$MANUFACTURER/$DEVICE          
+             git clone $DT_LINK --depth=1 --single-branch          
              
        - name: Build twrp
          run: |
               cd work
-              . build/envsetup.sh && lunch $OT$SYM$DEVICE-eng && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET$IMAGE -j60
+              . build/envsetup.sh && lunch $OT$SYM$DEVICE-user && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET$IMAGE -j60
               sudo zip -r twrp.zip /home/runner/work/out/target/product
 
        - name: Save in artifact
