@@ -50,17 +50,17 @@ jobs:
              cd work
              repo init -u $MANIFEST -b $BRANCH --depth=1              
              repo sync -c -j700 --force-sync --no-clone-bundle --no-tags
-             git clone $DT_LINK --depth=1 --single-branch          
+             git clone $DT_LINK --depth=1 --single-branch ./
              
        - name: Build twrp
          run: |
               cd work
               . build/envsetup.sh && lunch $OT$SYM$DEVICE-user && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET$IMAGE -j60
-              sudo zip -r twrp.zip /home/runner/work/out/target/product
+              sudo tar -zcvf twrp.tar.gz /home/runner/work/out/target/product/
 
        - name: Save in artifact
          uses: actions/upload-artifact@v3
          with:
-            name: recovery.zip
-            path: /home/runner/work/twrp.zip
+            name: recovery.tar.gz
+            path: /home/runner/work/twrp.tar.gz
             retention-days: 5
