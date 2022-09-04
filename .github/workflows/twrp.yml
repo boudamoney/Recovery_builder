@@ -7,7 +7,7 @@ env:
   # (required) twrp manifest 
   MANIFEST: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git
   # (required) manifest branch 
-  BRANCH: twrp-12.1
+  BRANCH: twrp-11
   # (required) device codename i.e: sweet mojito.. 
   DEVICE: f12
   # (required) device tree link with branch if exists
@@ -49,16 +49,16 @@ jobs:
          run: |   
              mkdir work
              cd work
-             repo init -u $MANIFEST -b $BRANCH --depth=1              
-             repo sync -c -j700 --force-sync --no-clone-bundle --no-tags
-             git clone $DT_LINK --depth=1 --single-branch device/$MANUFACTURER/$DEVICE
+             repo init -u $MANIFEST -b $BRANCH          
+             repo sync
+             git clone $DT_LINK device/$MANUFACTURER/$DEVICE
              
        - name: Build twrp
          run: |
               cd work
               tar_path=$(pwd)
-              . build/envsetup.sh && lunch $OT$SYM$DEVICE-user && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET$IMAGE -j60
-              sudo tar -zcvf /home/runner/twrp.tar.gz $tar_path/out
+              export ALLOW_MISSING_DEPENDENCIES=true && . build/envsetup.sh && lunch $OT$SYM$DEVICE-user && mka recoveryimage
+              sudo tar -zcvf /home/runner/twrp.tar.gz $tar_path/out/target/product/$DEVICE
 
        - name: Save in artifact
          uses: actions/upload-artifact@v3
