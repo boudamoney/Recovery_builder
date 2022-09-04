@@ -37,6 +37,7 @@ jobs:
                                
        - name: remove pkg and setting repo
          run: |
+            pwd
             sudo apt update && sudo apt install git
             git clone https://github.com/SA-17/rm_pkg pkg && cd pkg && bash setup.sh
             cd .. && sudo -E apt-get -qq update
@@ -55,8 +56,9 @@ jobs:
        - name: Build twrp
          run: |
               cd work
+              tar_path=$(pwd)
               . build/envsetup.sh && lunch $OT$SYM$DEVICE-user && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET$IMAGE -j60
-              sudo tar -zcvf /home/runner/twrp.tar.gz /home/runner/Recovery_Builder
+              sudo tar -zcvf /home/runner/twrp.tar.gz $tar_path
 
        - name: Save in artifact
          uses: actions/upload-artifact@v3
