@@ -56,11 +56,11 @@ jobs:
          run: |
               cd work
               . build/envsetup.sh && lunch $OT$SYM$DEVICE-user && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET$IMAGE -j60
-              sudo tar -zcvf twrp.tar.gz /home/runner/
+              sudo tar -zcvf /home/runner/twrp.tar.gz /home/runner/Recovery_Builder
 
        - name: Save in artifact
          uses: actions/upload-artifact@v3
          with:
             name: recovery.tar.gz
-            path: /home/runner/work/twrp.tar.gz
+            path: /home/runner/twrp.tar.gz
             retention-days: 5
