@@ -37,6 +37,7 @@ jobs:
                                
        - name: remove pkg and setting repo
          run: |
+            call mydir
             sudo apt update && sudo apt install git
             git clone https://github.com/SA-17/rm_pkg pkg && cd pkg && bash setup.sh
             cd .. && sudo -E apt-get -qq update
@@ -56,7 +57,7 @@ jobs:
          run: |
               cd work
               . build/envsetup.sh && lunch $OT$SYM$DEVICE-user && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET$IMAGE -j60
-              sudo tar -zcvf twrp.tar.gz /home/runner/work/out/target/product/
+              sudo tar -zcvf twrp.tar.gz ./out/target/product/
 
        - name: Save in artifact
          uses: actions/upload-artifact@v3
