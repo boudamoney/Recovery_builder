@@ -58,7 +58,7 @@ jobs:
               cd work
               tar_path=$(pwd)
               . build/envsetup.sh && lunch $OT$SYM$DEVICE-user && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET$IMAGE -j60
-              sudo tar -zcvf /home/runner/twrp.tar.gz $tar_path
+              sudo tar -zcvf /home/runner/twrp.tar.gz $tar_path/out
 
        - name: Save in artifact
          uses: actions/upload-artifact@v3
