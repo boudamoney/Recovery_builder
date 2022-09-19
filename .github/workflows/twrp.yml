@@ -54,7 +54,7 @@ jobs:
               cd work
               tar_path=$(pwd)
               . build/envsetup.sh && lunch omni_f12-eng && make -j$(nproc --all) recoveryimage
-              sudo tar -zcvf /home/runner/twrp.tar.gz $tar_path/out/target/product/f12
+              sudo tar -zcvf /home/runner/twrp.tar.gz $tar_path/out/target/product/f12/recovery.img
 
        - name: Save in artifact
          uses: actions/upload-artifact@v3
