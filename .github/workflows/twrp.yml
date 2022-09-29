@@ -45,7 +45,7 @@ jobs:
          run: |   
              mkdir work
              cd work
-             echo -ne '\n' | repo init -m $MANIFEST -b $BRANCH --depth=1      
+             repo init -m https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-10.0-deprecated --depth=1      
              repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
              git clone https://github.com/boudamoney/android_device_samsung_f12-TWRP.git -b master device/samsung/f12/
              
